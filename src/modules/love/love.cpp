@@ -57,6 +57,9 @@ extern "C"
 #ifdef LOVE_ENABLE_LUASOCKET
 #	include "libraries/luasocket/luasocket.h"
 #endif
+#ifdef LOVE_ENABLE_LUASEC
+#	include "libraries/luasec/luasec.h"
+#endif
 #ifdef LOVE_ENABLE_ENET
 #	include "libraries/enet/lua-enet.h"
 #endif
@@ -471,6 +474,9 @@ int luaopen_love(lua_State *L)
 
 #ifdef LOVE_ENABLE_LUASOCKET
 	love::luasocket::__open(L);
+#endif
+#ifdef LOVE_ENABLE_LUASEC
+	love::luasec::__open(L);
 #endif
 #ifdef LOVE_ENABLE_ENET
 	love::luax_preload(L, luaopen_enet, "enet");

@@ -1528,6 +1528,75 @@ add_library(love_3p_luasocket ${LOVE_SRC_3P_LUASOCKET})
 target_link_libraries(love_3p_luasocket ${LOVE_LUA_LIBRARY} ${LOVE_LINK_L3P_LUASOCKET_LIBLUASOCKET})
 
 #
+# luasec
+#
+
+set(LOVE_SRC_3P_LUASEC_ROOT
+	src/libraries/luasec/luasec.cpp
+	src/libraries/luasec/luasec.h
+)
+
+set(LOVE_SRC_3P_LUASEC_LIBLUASEC
+	src/libraries/luasec/libluasec/config.c
+	src/libraries/luasec/libluasec/config.h
+	src/libraries/luasec/libluasec/context.c
+	src/libraries/luasec/libluasec/context.h
+	src/libraries/luasec/libluasec/ec.c
+	src/libraries/luasec/libluasec/ec.h
+	src/libraries/luasec/libluasec/https.lua.h
+	src/libraries/luasocket/libluasocket/buffer.c
+	src/libraries/luasocket/libluasocket/buffer.h
+	src/libraries/luasocket/libluasocket/io.c
+	src/libraries/luasocket/libluasocket/io.h
+	src/libraries/luasocket/libluasocket/timeout.c
+	src/libraries/luasocket/libluasocket/timeout.h
+	src/libraries/luasec/libluasec/options.c
+	src/libraries/luasec/libluasec/options.h
+	src/libraries/luasec/libluasec/options.lua.h
+	src/libraries/luasec/libluasec/ssl.c
+	src/libraries/luasec/libluasec/ssl.h
+	src/libraries/luasec/libluasec/ssl.lua.h
+	src/libraries/luasec/libluasec/x509.c
+	src/libraries/luasec/libluasec/x509.h
+)
+
+set(LOVE_LINK_L3P_LUASEC_LIBLUASEC)
+
+if(MSVC)
+	set(LOVE_SRC_3P_LUASEC_LIBLUASEC
+		${LOVE_SRC_3P_LUASEC_LIBLUASEC}
+		src/libraries/luasocket/libluasocket/wsocket.c
+		src/libraries/luasocket/libluasocket/wsocket.h
+	)
+
+	set(LOVE_LINK_L3P_LUASEC_LIBLUASEC
+		${LOVE_LINK_L3P_LUASEC_LIBLUASEC}
+		ws2_32.lib
+	)
+else()
+	set(LOVE_SRC_3P_LUASEC_LIBLUASEC
+		${LOVE_SRC_3P_LUASEC_LIBLUASEC}
+		src/libraries/luasocket/libluasocket/serial.c
+		src/libraries/luasocket/libluasocket/unix.c
+		src/libraries/luasocket/libluasocket/unix.h
+		src/libraries/luasocket/libluasocket/unixdgram.c
+		src/libraries/luasocket/libluasocket/unixdgram.h
+		src/libraries/luasocket/libluasocket/unixstream.c
+		src/libraries/luasocket/libluasocket/unixstream.h
+		src/libraries/luasocket/libluasocket/usocket.c
+		src/libraries/luasocket/libluasocket/usocket.h
+	)
+endif()
+
+set(LOVE_SRC_3P_LUASEC
+	${LOVE_SRC_3P_LUASEC_ROOT}
+	${LOVE_SRC_3P_LUASEC_LIBLUASEC}
+)
+
+add_library(love_3p_luasec ${LOVE_SRC_3P_LUASEC})
+target_link_libraries(love_3p_luasec ${LOVE_LUA_LIBRARY} ${LOVE_LINK_L3P_LUASEC_LIBLUASEC})
+
+#
 # APIs from Lua 5.3
 #
 
@@ -1688,6 +1757,7 @@ set(LOVE_3P
 	love_3p_glslang
 	love_3p_lodepng
 	love_3p_luasocket
+	love_3p_luasec
 	love_3p_lua53
 	love_3p_lz4
 	love_3p_noise1234
@@ -1696,7 +1766,7 @@ set(LOVE_3P
 	love_3p_xxhash
 )
 
-love_disable_warnings(love_3p_box2d love_3p_enet love_3p_luasocket love_3p_physfs)
+love_disable_warnings(love_3p_box2d love_3p_enet love_3p_luasocket love_3p_luasec love_3p_physfs)
 
 #
 # liblove
